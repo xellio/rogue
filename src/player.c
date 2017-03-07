@@ -19,7 +19,6 @@ int placePlayer(Room ** rooms, Player * user) {
 	user->position->x = rooms[3]->position.x + 1;
 	user->position->y = rooms[3]->position.y + 1;
 
-	mvprintw(user->position->y, user->position->x, "@");
 	move(user->position->y, user->position->x);
 }
 
@@ -85,16 +84,13 @@ int checkPosition(Position * newPosition, Level * level) {
 //	return 1;
 }
 
-int playerMove(Position * newPosition, Player * user, char ** level) {
-	char buffer[8];
-
-	sprintf(buffer, "%c", level[user->position->y][user->position->x]);
-	mvprintw(user->position->y, user->position->x, buffer);
-	
+int playerMove(Position * newPosition, Player * user, char ** level) {	
 	user->position->y = newPosition->y;
 	user->position->x = newPosition->x;
-
-	mvprintw(user->position->y, user->position->x, "@");	
-	move(user->position->y, user->position->x);
 //	return 1;
+}
+
+void drawPlayer(Player * player) {
+	mvprintw(player->position->y, player->position->x, "@");
+	move(player->position->y, player->position->x);
 }

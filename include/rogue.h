@@ -7,6 +7,11 @@
 
 /****** Struct Definitions ******/
 
+typedef struct Game {
+	struct Level * levels[10];
+	int currentLevel;
+} Game;
+
 typedef struct Level {
 	char ** tiles;
 	int level;
@@ -67,6 +72,10 @@ int MAX_HEIGHT;
 int MAX_WIDTH;
 
 
+int gameLoop(Game * game);
+void drawLevel(Level * level);
+void pathFind(Position * start, Position * end);
+
 /* screen functions */
 int screenSetUp();
 int printGameHub(Level * level);
@@ -83,6 +92,7 @@ Position * handleInput(int input, Player * user);
 int checkPosition(Position * newPosition, Level * level);
 int playerMove(Position * newPosition, Player * user, char ** level);
 int placePlayer(Room ** rooms, Player * user);
+void drawPlayer(Player * player);
 
 /* room functions */
 Room * createRoom(int grid, int numberOfDoors);
@@ -98,6 +108,7 @@ int moveMonsters(Level * level);
 int pathfindingSeek(Position * start, Position * destination);
 int pathfindingRandom(Position * position);
 Monster * getMonsterAt(Position * position, Monster ** monsters);
+void drawMonster(Monster * monster);
 
 /* combat functions */
 int combat(Player * player, Monster * monster, int order);
