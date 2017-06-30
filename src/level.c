@@ -20,6 +20,19 @@ Level * createLevel(int level) {
 	return newLevel;
 }
 
+Room ** roomsSetUp() {
+	int x;
+	Room ** rooms;
+	rooms = malloc(sizeof(Room)*6);
+
+	for (x = 0; x < 6; x++) {
+		rooms[x] = createRoom(x, 4);
+		drawRoom(rooms[x]);
+	}
+	
+	return rooms;
+}
+
 void drawLevel(Level * level) {
 	int x, y, i;
 	// printing tiles
@@ -35,24 +48,6 @@ void drawLevel(Level * level) {
 	}
 
 	drawPlayer(level->user);
-}
-
-Room ** roomsSetUp() {
-	int x;
-	Room ** rooms;
-	rooms = malloc(sizeof(Room)*6);
-
-	for (x = 0; x < 6; x++) {
-		rooms[x] = createRoom(x, 4);
-		drawRoom(rooms[x]);
-	}
-
-
-//	connectDoors(rooms[0]->doors[3], rooms[1]->doors[1]);
-//	pathFind(rooms[0]->doors[3], rooms[1]->doors[1]);
-//	connectDoors(rooms[1]->doors[2], rooms[2]->doors[0]);
-
-	return rooms;
 }
 
 void connectDoors(Level * level) {
@@ -156,7 +151,6 @@ void checkPosition(Position * newPosition, Level * level) {
 			combat(user, getMonsterAt(newPosition, level->monsters), 1);
 			break;
 		default:
-//			move(user->position->y, user->position->x);
 			break;
 	}
 }

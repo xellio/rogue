@@ -16,16 +16,16 @@ typedef struct Level {
 	struct Player * user;
 } Level;
 
+Level * createLevel(int level);
+Room ** roomsSetUp();
+
 void drawLevel(Level * level);
+void connectDoors(Level * level);
+
+char ** saveLevelPositions();
 
 void addMonsters(Level * level);
 void moveMonsters(Level * level);
-
-/* Level/map functions */
-Level * createLevel(int level);
-Room ** roomsSetUp();
-char ** saveLevelPositions();
-void connectDoors(Level * level);
 
 void checkPosition(Position * newPosition, Level * level);
 
