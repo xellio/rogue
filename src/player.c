@@ -1,4 +1,5 @@
 #include "rogue.h"
+#include "player.h"
 
 Player * playerSetUp() {
 	Player * newPlayer;
@@ -13,13 +14,6 @@ Player * playerSetUp() {
 
 
 	return newPlayer;
-}
-
-int placePlayer(Room ** rooms, Player * user) {
-	user->position->x = rooms[3]->position.x + 1;
-	user->position->y = rooms[3]->position.y + 1;
-
-	move(user->position->y, user->position->x);
 }
 
 Position * handleInput(int input, Player * user) {
@@ -59,35 +53,9 @@ Position * handleInput(int input, Player * user) {
 
 
 
-/* check what is at next position */
-int checkPosition(Position * newPosition, Level * level) {
-	
-	Player * user;
-	user = level->user;
-
-	int space;
-	switch(mvinch(newPosition->y, newPosition->x)) {
-		case '.':
-		case '#':
-		case '+':
-			playerMove(newPosition, user, level->tiles);
-			break;
-		case 'X':
-		case 'G':
-		case 'T':
-			combat(user, getMonsterAt(newPosition, level->monsters), 1);
-			break;
-		default:
-			move(user->position->y, user->position->x);
-			break;
-	}
-//	return 1;
-}
-
-int playerMove(Position * newPosition, Player * user, char ** level) {	
+void playerMove(Position * newPosition, Player * user, char ** level) {	
 	user->position->y = newPosition->y;
 	user->position->x = newPosition->x;
-//	return 1;
 }
 
 void drawPlayer(Player * player) {

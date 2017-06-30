@@ -1,4 +1,6 @@
 #include "rogue.h"
+#include "level.h"
+#include "utils.h"
 
 Level * createLevel(int level) {
 	Level * newLevel;
@@ -103,3 +105,59 @@ char ** saveLevelPositions() {
 
 	return positions;
 }
+
+
+void addMonsters(Level * level) {
+	int x = 0;
+	level->monsters = malloc(sizeof(Monster *) * 6);
+	level->numberOfMonsters = 0;
+	for (x = 0; x < level->numberOfRooms; x++) {
+		if ((rand() % 2) == 0) {
+			level->monsters[level->numberOfMonsters] = selectMonster(level->level);
+			setStartingPosition(level->monsters[level->numberOfMonsters], level->rooms[x]);
+			level->numberOfMonsters++;
+		}
+	}
+}
+
+
+void moveMonsters(Level * level) {
+	int x;
+	for (x = 0; x < level->numberOfMonsters; x++) {
+		if (level->monsters[x]->alive == 0) {
+			continue;
+		}
+
+		if (level->monsters[x]->pathfinding == 1) {
+			pathfindingRandom(level->monsters[x]->position);
+		} else {
+			pathfindingSeek(level->monsters[x]->position, level->user->position);
+		}
+
+	}
+
+}
+
+/* check what is at next position */
+void checkPosition(Position * newPosition, Level * level) {
+	
+	Player * user;
+	user = level->user;
+
+	switch(mvinch(newPosition->y, newPosition->x)) {
+		case '.':
+		case '#':
+		case '+':
+			playerMove(newPosition, user, level->tiles);
+			break;
+		case 'X':
+		case 'G':
+		case 'T':
+			combat(user, getMonsterAt(newPosition, level->monsters), 1);
+			break;
+		default:
+//			move(user->position->y, user->position->x);
+			break;
+	}
+}
+

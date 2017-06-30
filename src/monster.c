@@ -1,18 +1,6 @@
 #include "rogue.h"
+#include "monster.h"
 
-int addMonsters(Level * level) {
-	int x = 0;
-	level->monsters = malloc(sizeof(Monster *) * 6);
-	level->numberOfMonsters = 0;
-	for (x = 0; x < level->numberOfRooms; x++) {
-		if ((rand() % 2) == 0) {
-			level->monsters[level->numberOfMonsters] = selectMonster(level->level);
-			setStartingPosition(level->monsters[level->numberOfMonsters], level->rooms[x]);
-			level->numberOfMonsters++;
-		}
-	}
-	return 1;
-}
 
 Monster * selectMonster(int level) {
 	int monster;
@@ -70,6 +58,8 @@ Monster * selectMonster(int level) {
 			return createMonster('G', 5, 3, 1, 1, 2);
 		case 3: /* troll */
 			return createMonster('T', 15, 5, 1, 1, 1);
+		default:
+			return createMonster('O', 15, 5, 1, 1, 1);
 	}
 }
 
@@ -95,32 +85,7 @@ int killMonster(Monster * monster) {
 	return 1;
 }
 
-int setStartingPosition(Monster * monster, Room * room) {
-	
-	monster->position = malloc(sizeof(Position));
 
-	monster->position->x = (rand() % (room->width - 2)) + room->position.x + 1;
-	monster->position->y = (rand() % (room->height - 2)) + room->position.y + 1;
-
-	return 1;
-}
-
-int moveMonsters(Level * level) {
-	int x;
-	for (x = 0; x < level->numberOfMonsters; x++) {
-		if (level->monsters[x]->alive == 0) {
-			continue;
-		}
-
-		if (level->monsters[x]->pathfinding == 1) {
-			pathfindingRandom(level->monsters[x]->position);
-		} else {
-			pathfindingSeek(level->monsters[x]->position, level->user->position);
-		}
-
-	}
-	return 1;
-}
 
 int pathfindingRandom(Position * position) {
 	int random;

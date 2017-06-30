@@ -1,6 +1,7 @@
 #include "rogue.h"
+#include "utils.h"
 
-int combat(Player * player, Monster * monster, int order) {
+void combat(Player * player, Monster * monster, int order) {
 	/* player attacking */
 	if (order == 1) {
 		monster->health -= player->attack;
@@ -19,5 +20,4 @@ int combat(Player * player, Monster * monster, int order) {
 
 		}
 	}
-	return 1;
 }
