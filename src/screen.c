@@ -22,3 +22,13 @@ void printGameHub(Level * level) {
 	printw("    Exp: %d", level->user->exp);
 	printw("    ");
 }
+
+void printInventory(Player * player) {
+	int i;
+	mvprintw(26, 0, "    Inventory: ");
+
+	for (i = 0; i < player->numberItems; i++) {
+		printw(player->items[i]->string);
+	}
+
+}

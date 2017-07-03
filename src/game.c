@@ -21,17 +21,24 @@ void gameLoop(Game * game) {
 	level = game->levels[game->currentLevel - 1];
 
 	/* main game loop */
-	while(ch != 'q') {
+	while(1) {
 
-		newPosition = handleInput(ch, level->user);
-		checkPosition(newPosition, level);
-		moveMonsters(level);
+		if (ch == 'q' || ch == 'Q') {
+			break;
+		}
+		if (ch == 'i' || ch == 'I') {
+			printInventory(level->user);
+		} else {
+			newPosition = handleInput(ch, level->user);
+			checkPosition(newPosition, level);
+			moveMonsters(level);
 
-		render(game);
+			render(game);
 
-		if (level->user->health <= 0) {
-			game->currentLevel = 0;
-			return;
+			if (level->user->health <= 0) {
+				game->currentLevel = 0;
+				return;
+			}
 		}
 		ch = getch();
 	}

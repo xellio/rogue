@@ -3,6 +3,7 @@
 
 #include <curses.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 /****** Global Variables ******/
